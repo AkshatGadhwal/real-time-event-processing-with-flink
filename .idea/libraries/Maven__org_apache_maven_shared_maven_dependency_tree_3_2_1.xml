@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.maven.shared:maven-dependency-tree:3.2.1" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.apache.maven.shared" artifactId="maven-dependency-tree" version="3.2.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/maven/shared/maven-dependency-tree/3.2.1/maven-dependency-tree-3.2.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/maven/shared/maven-dependency-tree/3.2.1/maven-dependency-tree-3.2.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/maven/shared/maven-dependency-tree/3.2.1/maven-dependency-tree-3.2.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
