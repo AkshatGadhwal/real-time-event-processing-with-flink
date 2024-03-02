@@ -52,12 +52,82 @@
   </build>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>2.1.0-alpha1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-nop -->
+<!--    <dependency>-->
+<!--      <groupId>org.slf4j</groupId>-->
+<!--      <artifactId>slf4j-nop</artifactId>-->
+<!--      <version>2.1.0-alpha1</version>-->
+<!--    </dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+<!--    <dependency>-->
+<!--      <groupId>org.slf4j</groupId>-->
+<!--      <artifactId>slf4j-api</artifactId>-->
+<!--      <version>2.1.0-alpha1</version>-->
+<!--    </dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+<!--    <dependency>-->
+<!--      <groupId>org.slf4j</groupId>-->
+<!--      <artifactId>slf4j-log4j12</artifactId>-->
+<!--      <version>2.1.0-alpha1</version>-->
+<!--      <type>pom</type>-->
+<!--    </dependency>-->
+
     <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-jar-plugin</artifactId>
       <version>3.3.0</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-base -->
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-connector-base</artifactId>
+      <version>1.18.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-clients</artifactId>
+      <version>1.18.1</version>
+    </dependency>
+
+
+
+    <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-connector-kafka -->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.flink</groupId>-->
+<!--      <artifactId>flink-connector-kafka_2.12</artifactId>-->
+<!--      <version>1.9.1</version>-->
+<!--    </dependency>-->
+
+    <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
+<!--    <dependency>-->
+<!--      <groupId>org.apache.flink</groupId>-->
+<!--      <artifactId>flink-streaming-java_2.12</artifactId>-->
+<!--      <version>1.14.0</version>-->
+<!--&lt;!&ndash;      <scope>provided</scope>&ndash;&gt;-->
+<!--    </dependency>-->
+
+
+    <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.5.1</version>
+      <scope>test</scope>
+    </dependency>
+
 
     <dependency>
       <groupId>org.postgresql</groupId>

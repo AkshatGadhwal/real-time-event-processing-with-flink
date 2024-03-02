@@ -3,15 +3,16 @@ import json
 import random
 import time
 from kafka import KafkaProducer
+from datetime import datetime
 
 faker = Faker()
 producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
-user_ids = [faker.uuid4() for _ in range(100)]  # Generate a list of 100 unique user IDs
+user_ids = [faker.uuid4() for _ in range(10)]  # Generate a list of 100 unique user IDs
 
 while True:
     event = {
-        "timestamp": faker.iso8601(),
+        "timestamp": int(datetime.now().timestamp() * 1000),
         "userId": random.choice(user_ids),  # Randomly select a user ID from the list
         "eventType": "pageView",
         "productId": faker.uuid4(),
