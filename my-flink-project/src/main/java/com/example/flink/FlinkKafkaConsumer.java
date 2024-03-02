@@ -76,7 +76,7 @@ public class FlinkKafkaConsumer {
                         .withUrl("jdbc:postgresql://localhost:5432/test-db-1")
                         .withDriverName("org.postgresql.Driver")
                         .withUsername("postgres")
-                        .withPassword("postgres")
+                        .withPassword("")
                         .build()
         );
 
