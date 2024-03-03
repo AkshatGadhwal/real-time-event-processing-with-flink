@@ -1,57 +1,181 @@
-
 # Real-Time Event Processing with Flink
 
-This repository contains scripts for real-time event processing using Apache Flink. The setup involves a producer script that generates random data and pushes it to a Kafka topic named "user-events". This Kafka topic serves as a source for the Flink job.
+This repository contains scripts for real-time event processing using Apache Flink. The setup involves a producer script that generates random data and pushes it to a Kafka topic named "user-events". This Kafka topic serves as a source for the Flink job. The Flink job reads data from the Kafka topic, processes it in real-time, calculates the total and average time spent by a user, and stores the results in a PostgreSQL database named "test-db-1" and a table named "user_interaction".
 
 ## Components:
 
 1. **Producer Script**:
-    - Generates random data and sends it to the Kafka topic "user-events".
+        - Generates random data and sends it to the Kafka topic "user-events".
 
 2. **Flink Job**:
-    - Reads data from the Kafka topic "user-events" and performs real-time processing.
+        - Reads data from the Kafka topic "user-events" and performs real-time processing.
 
 3. **Database**:
-    - The Flink job processes data from Kafka and stores the results in a PostgreSQL database named "user_interaction".
+        - The Flink job processes data from Kafka and stores the results in a PostgreSQL database named "user_interaction".
 
 4. **Consumer Script** (Optional for verification):
-    - Reads from the Kafka topic "user-events" and prints data to the console for verification.
+        - Reads from the Kafka topic "user-events" and prints data to the console for verification.
 
 ## Setup Instructions:
 
-1. **Database Setup**:
-    - Use the provided dump file to create the required table in the PostgreSQL database "user_interaction".
+1. **Java Setup**:
+        - Install Java 8 or higher.
 
-2. **Running the Producer**:
-    - start zookeeper and kafka, create topic
-    - Execute the producer script to generate random data and push it to the Kafka topic "user-events".
+2. **Database Setup**:
+        - Use the provided dump file to create the required table in the PostgreSQL database "test-db-1".
+        - The table is named "user_interaction" and has the following schema:
+            ```sql
+            CREATE TABLE user_interaction (
+                        user_id TEXT,
+                        sessions_cnt INT,
+                        total_time_spend INT
+            );
+            ```
+        - Update the database credentials (username and password) in the Flink job.
 
-3. **Running the Flink Job**:
-    - start the cluster
-    - create the fatjar and submit the job
-    - Deploy and run the Flink job to process data from the Kafka topic and store results in the database.
+3. **Kafka Setup**:
+        - Install Kafka:
+            ```shell
+            wget https://downloads.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz
+            tar -xzf kafka_2.13-3.7.0.tgz
+            cd kafka_2.13-3.7.0
+            ```
+        - Update the Kafka configuration file "server.properties" to set the following properties:
+            ```properties
+            listeners=PLAINTEXT://:9092
+            advertised.listeners=PLAINTEXT://localhost:9092
+            ```
+        - Start the Zookeeper and Kafka server using the following commands:
+            ```shell
+            bin/zookeeper-server-start.sh config/zookeeper.properties
+            bin/kafka-server-start.sh config/server.properties
+            ```
+        - Create a Kafka topic named "user-events" using the following command:
+            ```shell
+            bin/kafka-topics.sh --create --topic user-events --bootstrap-server localhost:9092
+            ```
+        - Verify the topic creation using the following command:
+            ```shell
+            bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+            ```
+        - Start a Kafka consumer to verify the topic:
+            ```shell
+            kafka-console-consumer --bootstrap-server localhost:9092 --topic user-events --latest
+            ```
+        - Start a Kafka producer to verify the topic:
+            ```shell
+            kafka-console-producer --bootstrap-server localhost:9092 --topic user-events
+            ```
+        - Use the producer script to generate random data and push it to the Kafka topic "user-events".
 
-4. **Verification** (Optional):
-    - Use the consumer script to read from the Kafka topic "user-events" and verify data consumption.
 
-## Files:
+4. **Flink Setup**:
+        - Install Apache Flink:
+            ```shell
+            wget https://downloads.apache.org/flink/flink-1.18.1/flink-1.18.1-bin-scala_2.12.tgz
+            tar -xzf flink-*.tgz
+            cd flink-* && ls -l
+            ```
+        - Start the Flink cluster using the following command:
+            ```shell
+            ./bin/start-cluster.sh
+            ```
+        - Create a fatjar for the Flink job using the following command:
+            ```shell
+            ./bin/flink run /path/to/fatjar
+            ```
+        - Verify the job submission using the following command:
+            ```shell
+            ./bin/flink list
+            ```
+        - Use the consumer script to read from the Kafka topic "user-events" and verify data consumption.
 
-- **producer.py**: Script to generate random data and push it to the Kafka topic.
-- **flink_job.jar**: Apache Flink job for real-time event processing.
-- **consumer.py**: Script to read from the Kafka topic for verification.
-- **dump.sql**: SQL dump file to create the required table in the PostgreSQL database.
 
-## Usage:
+5. **Verification** (Optional):
+        - Use the consumer script to read from the Kafka topic "user-events" and verify data consumption.
 
-1. Clone the repository:
+6. **Running the Producer**:
+        - Install the required packages using the following command:
+            ```shell
+            pip install -r requirements.txt
+            ```
+        - (if not already) Start Zookeeper and Kafka, create topic.
+        - Execute the producer script to generate random data and push it to the Kafka topic "user-events".
 
-   ```
-   git clone https://github.com/AkshatGadhwal/real-time-event-processing-with-flink.git
-   ```
+7. **Creating the Fatjar**:
+        - clone the repository:
+            ```shell
+            git clone https://github.com/AkshatGadhwal/real-time-event-processing-with-flink.git 
+            ```
+        - Go to the project directory:
+            ```shell
+            cd real-time-event-processing-with-flink
+            ```
+        - Go to the Flink job directory:
+            ```shell
+            cd my-flink-project
+            ```
+        - Create a fatjar for the Flink job using the following command:
+            ```shell
+            mvn clean package
+            ```
+        - Copy the path of the fatjar and submit the Flink job.
 
-2. Follow the setup instructions provided above.
+7. **Running the Flink Job**:
+        - (if not started already) Start the cluster.
+        - (if not created already) Create the fatjar and submit the job.
+        - Access the Flink dashboard using the following link:
+            ```
+            http://localhost:8081
+            ```
+        - Verify the job submission using the following command:
+            ```shell
+            ./bin/flink list
+            ```
 
-## Contributors:
+8. **Cleanup**:
+        - Stop the Flink cluster using the following command:
+            ```shell
+            ./bin/stop-cluster.sh
+            ```
+        - Stop the Zookeeper and Kafka server using the following commands:
+            ```shell
+            bin/kafka-server-stop.sh
+            bin/zookeeper-server-stop.sh
+            ```
 
-- [Akshat Gadhwal](https://github.com/AkshatGadhwal)
+## Workflow:
 
+1. **Java Setup**:
+        - Install Java 8 or higher.
+        - Install Maven.
+
+2. **Database Setup**:
+        - Create the required table in the PostgreSQL database.
+        - Update the database credentials in the Flink job.
+
+3. **Kafka Setup**:
+        - Install Kafka and configure it.
+        - Start the Zookeeper and Kafka server.
+        - Create a Kafka topic and verify its creation.
+
+7. **Creating the Fatjar**:
+        - Create a fatjar for the Flink job.
+        - Submit the Flink job.
+
+4. **Flink Setup**:
+        - start the Flink cluster.
+        - Submit the Flink job with the Fatjar.
+        - Access the Flink dashboard to monitor the job.
+
+5. **Running the Producer**:
+        - Install the required packages.
+        - Start Zookeeper and Kafka, create topic.
+        - Execute the producer script.
+
+6. **Verification** (Optional):
+        - Use the consumer script to verify data consumption.
+
+8. **Cleanup**:
+        - Stop the Flink cluster.
+        - Stop the Zookeeper and Kafka server.
