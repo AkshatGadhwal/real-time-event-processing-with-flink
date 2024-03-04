@@ -2,6 +2,24 @@
 
 This repository contains scripts for real-time event processing using Apache Flink. The setup involves a producer script that generates random data and pushes it to a Kafka topic named "user-events". This Kafka topic serves as a source for the Flink job. The Flink job reads data from the Kafka topic, processes it in real-time, calculates the total and average time spent by a user, and stores the results in a PostgreSQL database named "test-db-1" and a table named "user_interaction".
 
+## Technical Concepts Used:
+
+1. **UserEvent class**:
+    - The `UserEvent` class represents the structure of the event data. It contains fields such as `userId`, `timestamp`, and other relevant attributes.
+
+2. **Custom Deserializer**:
+    - A custom deserializer is used to read the data from the Kafka source in the `UserEvent` format. This deserializer is responsible for converting the binary data received from Kafka into instances of the `UserEvent` class.
+
+3. **Custom Watermarking Strategy**:
+    - A custom watermarking strategy is implemented to extract and assign the source data timestamp as the watermark. Watermarks are used in event time processing to track the progress of time and determine when to trigger time-based operations.
+
+4. **Aggregation**:
+    - The source stream is separated by `userId` to create a parallel stream. This allows for independent processing of events belonging to different users. Aggregation operations, such as calculating the total time spent and session count, are performed on each parallel stream.
+
+5. **PostgreSQL Database Sink**:
+    - The PostgreSQL database is configured as the sink for storing the processed results. The Flink job writes the aggregated data, such as the total time spent and session count, to the `user_interaction` table in the `test-db-1` database.
+
+
 ## Components:
 
 1. **Producer Script**:
