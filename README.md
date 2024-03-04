@@ -19,6 +19,27 @@ This repository contains scripts for real-time event processing using Apache Fli
 5. **PostgreSQL Database Sink**:
     - The PostgreSQL database is configured as the sink for storing the processed results. The Flink job writes the aggregated data, such as the total time spent and session count, to the `user_interaction` table in the `test-db-1` database.
 
+6. **Input Format**:
+    - The input events are generated in the following format:
+        ```python
+        event = {
+            "timestamp": int(datetime.now().timestamp() * 1000),
+            "userId": random.choice(user_ids),  # Randomly select a user ID from the list
+            "eventType": "pageView",
+            "productId": faker.uuid4(),
+            "sessionDuration": faker.random_int(min=0, max=300)
+        }
+        ```
+    - The `event` dictionary represents a single event with fields such as `timestamp`, `userId`, `eventType`, `productId`, and `sessionDuration`.
+    - The `timestamp` field represents the event timestamp in milliseconds.
+    - The `userId` field represents the ID of the user associated with the event.
+    - The `eventType` field represents the type of event (e.g., "pageView").
+    - The `productId` field represents the ID of the product associated with the event.
+    - The `sessionDuration` field represents the duration of the user session in seconds.
+    - The `random.choice(user_ids)` expression randomly selects a user ID from the `user_ids` list.
+    - The `faker.uuid4()` expression generates a random UUID for the `productId` field.
+    - The `faker.random_int(min=0, max=300)` expression generates a random integer between 0 and 300 for the `sessionDuration` field.
+
 
 ## Components:
 
